@@ -1,5 +1,5 @@
 
-public-encrypt/
+public-encrypt/test
 *.pem
 *.pub
 *.priv
