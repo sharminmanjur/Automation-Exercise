@@ -1,17 +1,30 @@
-const { defineConfig } = require('cypress');
-const cucumber = require('cypress-cucumber-preprocessor').default;
-
+const {Cypress} = require("cypress");
+const { defineConfig } = require("cypress");
+const createBundler = require("@bahmutov/cypress-esbuild-preprocessor");
+const addCucumberPreprocessorPlugin = require("@badeball/cypress-cucumber-preprocessor").addCucumberPreprocessorPlugin;
+const createEsbuildPlugin = require("@badeball/cypress-cucumber-preprocessor/esbuild").createEsbuildPlugin;
 
 module.exports = defineConfig({
   e2e: {
     setupNodeEvents(on, config) {
-      on('file:preprocessor', cucumber())
+      const bundler = createBundler({
+        plugins: [createEsbuildPlugin(config)],
+});
+      on("file:preprocessor", bundler);
+      addCucumberPreprocessorPlugin(on, config);
+
+      on("task", {
+        log(args) {
+          console.log(...args);
+          console.log();
+          return null;
+    }
+  });
+
+      return config;
     },
-    baseUrl: 'https://automationexercise.com',
-    supportFile: 'cypress/support/index.js',
-    specPattern: "cypress\e2e\features\purchase.feature",
-    defaultCommandTimeout: 10000,
-    viewportWidth: 1280,
-    viewportHeight: 720,
+    //specPattern: "cypress/e2e/features/signup.feature",
+    //specPattern: "cypress/e2e/features/login.feature",
+    specPattern: "cypress/e2e/features/purchaseflow.feature",
   },
 });

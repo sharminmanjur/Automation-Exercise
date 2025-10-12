@@ -14,7 +14,14 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@badeball/cypress-cucumber-preprocessor": "^23.2.1",
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.6",
+    "@shelex/cypress-allure-plugin": "^2.41.2",
     "cypress": "^15.4.0",
-    "cypress-cucumber-preprocessor": "^4.3.1"
+    "cypress-commands": "^3.0.0",
+    "cypress-cucumber-preprocessor": "^4.3.1",
+    "cypress-real-events": "^1.15.0",
+    "cypress-wait-until": "^3.0.2",
+    "cypress-xpath": "^2.0.1"
   }
 }
