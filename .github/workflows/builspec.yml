@@ -31,7 +31,11 @@ jobs:
     - name: Install dependencies
       run: npm install
 
-    - name: Run Cypress tests
-      run: npm run cy:run
-      env:
-        CYPRESS_baseUrl: 'https://automationexercise.com/'
+    - name: Cypress run
+      uses: cypress-io/github-action@v2
+      with:
+        build: npm run build
+        start: npm start
+        wait-on: 'https://automationexercise.com/'
+        wait-on-timeout: 120
+        runTests: npm run cy:run
