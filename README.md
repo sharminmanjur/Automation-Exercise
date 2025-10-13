@@ -22,8 +22,7 @@
 ```bash
 npx cypress open
 ```
-<!-- In config file comment out specPattern respectively to run the scripts. /purchaseflow.feature is for task 1 and /API.feature is for task 2. Change the email in step definition: 'I have the user details' before running task 2-->
-
+<!-- In config file comment out specPattern respectively to run the scripts. /purchaseflow.feature is for task 1 and /API.feature is for task 2. First run task 2 twice and then change the email in user_credentials file before running task 1-->
 <!-- I have installed and configured allure report but wasn't able to run successfully. So below commands won't work-->
 
 ## Run
