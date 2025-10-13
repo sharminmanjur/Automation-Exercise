@@ -3,3 +3,5 @@ public-encrypt/test
 *.pem
 *.pub
 *.priv
+
+cypress/downloads/
