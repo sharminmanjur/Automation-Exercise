@@ -36,7 +36,7 @@ When('I send a POST request to create the account', function() {
   }).as('apiResponse');
 });
 
-Then('I should receive a success message', function() {
+Then('I should receive the status code', function() {
   cy.get('@apiResponse').then(response => {
   
     console.log('Full API Response:', response);
@@ -67,7 +67,7 @@ Then('the user enters valid credentials', function() {
 });
 
 Given('the user navigates to the products page', () => {
-  cy.visit('https://automationexercise.com/products');
+  cy.get('.shop-menu a[href="/products"]').click();
 });
 
 
@@ -91,3 +91,53 @@ When('proceeds to checkout and completes the order', () => {
   cy.get('a.btn.btn-default.check_out').click();
 });
 
+When('the user fills in the payment details and confirms the order', () => {
+  cy.get('input[name="name_on_card"]').type('Gucci Prada');
+  cy.get('input[name="card_number"]').type('4111 1111 1111 1111');
+  cy.get('input[name="cvc"]').type('123');
+  cy.get('input.card-expiry-month[placeholder="MM"]').type('12');
+  cy.get('input.card-expiry-year[placeholder="YYYY"]').type('2026');
+
+  cy.get('button#submit').click();
+
+});
+
+Then('the order should be placed successfully and a success confirmation message should be displayed', () => {
+  cy.contains('Congratulations! Your order has been confirmed!');
+});
+
+When('I download the PDF file', () => {
+ cy.get('a.check_out')
+    .click();
+});
+
+Then('the PDF file size should be greater than 0 KB', () => {
+  const filePath = 'cypress/downloads/invoice.txt';
+  cy.readFile(filePath, 'binary').then((fileContents) => {
+    const fileSizeInKB = fileContents.length / 1024;
+    expect(fileSizeInKB).to.be.greaterThan(0);
+});
+});
+
+Then('I should receive a success message', function() {
+ cy.get('@apiResponse').then((response) => {
+    
+    const responseBody = JSON.parse(response.body);
+    console.log('Parsed Response Body:', responseBody);
+
+    expect(response.status).to.eq(200);
+    expect(response.statusText).to.eq('OK');
+    
+    if(responseBody.responseCode === 201) {
+      expect(responseBody).to.deep.include({
+        responseCode: 201,
+        message: 'User created!'
+      });
+    } else if (responseBody.responseCode === 400) {
+      expect(responseBody).to.deep.include({
+        responseCode: 400,
+        message: 'Email already exists!'
+      });
+    }
+  });
+});

@@ -23,8 +23,15 @@ module.exports = defineConfig({
 
       return config;
     },
+    downloadsFolder: 'cypress/downloads',
+    video: false,
+    chromeWebSecurity: false,
+    defaultCommandTimeout: 10000,
+    pageLoadTimeout: 60000,
+    viewportWidth: 1280,
+    viewportHeight: 720,
     //specPattern: "cypress/e2e/features/signup.feature",
-    //specPattern: "cypress/e2e/features/login.feature",
+    //specPattern: "cypress/e2e/features/API.feature",
     specPattern: "cypress/e2e/features/purchaseflow.feature",
   },
 });
