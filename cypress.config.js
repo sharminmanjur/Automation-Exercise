@@ -1,5 +1,6 @@
 const {Cypress} = require("cypress");
 const { defineConfig } = require("cypress");
+const allureWriter = require('@shelex/cypress-allure-plugin/writer');
 const createBundler = require("@bahmutov/cypress-esbuild-preprocessor");
 const addCucumberPreprocessorPlugin = require("@badeball/cypress-cucumber-preprocessor").addCucumberPreprocessorPlugin;
 const createEsbuildPlugin = require("@badeball/cypress-cucumber-preprocessor/esbuild").createEsbuildPlugin;
@@ -12,6 +13,7 @@ module.exports = defineConfig({
 });
       on("file:preprocessor", bundler);
       addCucumberPreprocessorPlugin(on, config);
+      allureWriter(on, config);
 
       on("task", {
         log(args) {
@@ -30,7 +32,7 @@ module.exports = defineConfig({
     pageLoadTimeout: 60000,
     viewportWidth: 1280,
     viewportHeight: 720,
-    //specPattern: "cypress/e2e/features/signup.feature",
+
     //specPattern: "cypress/e2e/features/API.feature",
     specPattern: "cypress/e2e/features/purchaseflow.feature",
   },

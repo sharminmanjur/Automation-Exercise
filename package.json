@@ -8,7 +8,10 @@
     "cy:info": "cypress info",
     "cy:verify": "cypress verify",
     "cy:run": "cypress run",
-    "cy:open": "cypress open"
+    "cy:open": "cypress open",
+    "cypress:run": "cypress run",
+    "allure:generate": "allure generate --clean",
+    "allure:open": "allure open"
   },
   "repository": {
     "type": "git",
@@ -27,5 +30,8 @@
     "cypress-real-events": "^1.15.0",
     "cypress-wait-until": "^3.0.2",
     "cypress-xpath": "^2.0.1"
+  },
+  "dependencies": {
+    "cypress-parallel": "^0.15.0"
   }
 }
