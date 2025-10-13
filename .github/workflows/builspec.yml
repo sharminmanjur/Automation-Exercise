@@ -1,4 +1,4 @@
-name: Cypress with Cucumber tests
+name: Cypress Tests
 
 on:
   push:
@@ -9,33 +9,24 @@ on:
       - main
 
 jobs:
-  test:
+  cypress-run:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [22, 20]
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Use Node.js 22
+        uses: actions/setup-node@v2
+        with:
+          node-version: '22'
 
-    - name: Set execute permissions for Cypress
-      run: chmod +x node_modules/.bin/cypress
+      - name: Install dependencies
+        run: npm install
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }}
-
-    - name: Install dependencies
-      run: npm install
-
-    - name: Cypress run
-      uses: cypress-io/github-action@v2
-      with:
-        build: npm run build
-        start: npm start
-        wait-on: 'https://automationexercise.com/'
-        wait-on-timeout: 120
-        runTests: npm run cy:run
+      - name: Run Cypress tests
+        uses: cypress-io/github-action@v2
+        with:
+          wait-on: https://automationexercise.com/
+          wait-on-timeout: 120
+          runTests: npm run cy:run
